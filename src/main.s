@@ -44,9 +44,9 @@ take_argument:
 	addi $t0, $t0, 1
 	beq $v0, $t0, call_or
 	addi $t0, $t0, 1
-	beq $v0, $t0, call_sin
+	beq $v0, $t0, call_lcm
 	addi $t0, $t0, 1
-	beq $v0, $t0, call_cos
+	beq $v0, $t0, call_var
 	addi $t0, $t0, 1
 	beq $v0, $t0, call_mean
 	addi $t0, $t0, 1
@@ -130,16 +130,23 @@ call_gcd:
 call_fact:
 	jal factorial
 call_mod:
-
+	jal modulus
 call_exp:
+	jal exponent
 call_and:
 	jal andfunc
 call_or:
 	jal orfunc
-call_sin:
-call_cos:
+call_lcm:
+	jal lcm
+call_var:
+	
 call_mean:
+	jal mean
+	
+	j end
 call_median:
+
 call_mode:
 
 prompt_array:
@@ -178,6 +185,6 @@ end:
 
 	.data
 intro: .asciiz "\n Welcome to Console Calculator \n Please enter the proper argument to use the following functions \n"  
-argument_inst: .asciiz "\n 1: addition \n 2: subtraction \n 3: multiplication \n 4: division \n 5: gcd \n 6: factorial \n 7: modulus \n 8: integer exponent \n 9: logical and \n 10: logical or \n 11: sine \n 12: cosine \n 13: mean \n 14: median \n 15: mode \n"
+argument_inst: .asciiz "\n 1: addition \n 2: subtraction \n 3: multiplication \n 4: division \n 5: Greatest Common Divisor \n 6: factorial \n 7: modulus \n 8: integer exponent \n 9: logical and \n 10: logical or \n 11: Least Common Multiple \n 12: variance \n 13: mean \n 14: median \n 15: mode \n"
 prompt_array_string: .asciiz "\n Please Enter the number of arguments you want to enter \n"
 result_string: .asciiz "\n The result is: "
