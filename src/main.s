@@ -126,11 +126,16 @@ call_div:
 	j end
 
 call_gcd:
+	jal gcd
 call_fact:
+	jal factorial
 call_mod:
+
 call_exp:
 call_and:
+	jal andfunc
 call_or:
+	jal orfunc
 call_sin:
 call_cos:
 call_mean:
