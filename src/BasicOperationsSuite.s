@@ -54,18 +54,25 @@ mult_loop:
 	
 division:
 	lw $t2, ($a0) # $t1 contains arr[i]
-	add $t0, $zero, $t2 #initialize the accumulator
+	#convert int to float
+	mtc1 $t2, $f0
+	cvt.d.w $f0, $f0
+	
 	add $t1, $zero, $zero #initialize iteration
 	
 	addi $a0, $a0, 4 #increment ptr by a word
 	addi $t1, $t1, 1 #increment iteration by 1
 div_loop:
 	lw $t2, ($a0) # $t1 contains arr[i]
-	div $t0, $t2 # accumulator /= arr[i]
-	mflo $t0 #put quotient into the accumulator
+	#convert int to float
+	mtc1 $t2, $f2
+	cvt.d.w $f2, $f2
+	
+	div.d $f0, $f0, $f2# accumulator /= arr[i]
 	
 	addi $a0, $a0, 4 #increment ptr by a word
 	addi $t1, $t1, 1 #increment iteration by 1
 	blt $t1, $a1, div_loop #while iteration < size of arr
-	add $v0, $zero, $t0 #add accumulator to the return
+	
+	
 	jr $ra #return

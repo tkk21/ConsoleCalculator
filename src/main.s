@@ -113,14 +113,17 @@ call_div:
 	add $a0, $zero, $v0
 	add $a1, $zero, $v1
 	jal division
-	add $t0, $v0, $zero
+	
+	add.d $f12, $f0, $f0
+	sub.d $f12, $f12, $f0
+	
+
 	
 	li $v0, 4
 	la $a0, result_string
 	syscall
-	#print result int
-	li $v0, 1
-	add $a0, $zero, $t0
+	#print result double
+	li $v0, 3
 	syscall
 	
 	j end
@@ -143,8 +146,6 @@ call_var:
 	
 call_mean:
 	jal mean
-	
-	j end
 call_median:
 
 call_mode:
