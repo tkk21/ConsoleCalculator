@@ -10,6 +10,7 @@
 .text
 
 mean:
+	addu	$s6, $0, $ra
 	la $t0, array   #initializes some variables
 	li $v0,4        # syscall to print String
     la $a0,promptA  # load address of Prompt
@@ -56,11 +57,7 @@ findingMean:
 
 	mtc1 $t0, $f6			#calculates the average
 	cvt.d.w $f6, $f6
-	div.d $f12, $f2, $f6
+	div.d $f0, $f2, $f6
 
-	la $a0, answer 			#prints the average for the user
-	li $v0, 4
-	syscall
-	li $v0, 3
-	syscall
-	jr $ra					#returns to main
+	addu	$ra, $0, $s6	#restore the return address
+	jr $ra
