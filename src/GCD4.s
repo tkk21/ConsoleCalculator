@@ -3,10 +3,10 @@ A:  .word 0
 B:  .word 0
 Prompt: .asciiz "Type integer for A, press ENTER. Type integer for B, press ENTER \n"
 Result: .asciiz "\nThe GCD is "
-.globl main
+.globl gcd
 .text
 
-main:
+gcd:
 
     li $v0,4        # syscall to print String
     la $a0,Prompt   # load address of Prompt

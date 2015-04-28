@@ -6,9 +6,10 @@
 	slash: .asciiz "/"
 	newline: .asciiz "\n"
 	space: .asciiz " "
+.globl mean
 .text
 
-main:
+mean:
 	la $t0, array   #initializes some variables
 	li $v0,4        # syscall to print String
     la $a0,promptA  # load address of Prompt

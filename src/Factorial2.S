@@ -1,4 +1,4 @@
-.globl main
+.globl factorial
 .data
 	Prompt: .asciiz "Type a positive integer for A 12 or under, press ENTER. \n"
 	ResultA: .asciiz "\nThe factorial of "
@@ -6,7 +6,7 @@
 	ResultC: .asciiz ".\n"
 .text
  
-main:
+factorial:
 
 	li $v0,4        # syscall to print String
     la $a0,Prompt   # load address of Prompt
@@ -53,7 +53,7 @@ main:
  
  
 .text
-factorial:
+fact:
 							# base  case - still in parent's stack segment
   lw      $t0, 0($sp)       # load input from top of stack into register $t0
   beq     $t0, 0, returnOne # if $t0 is equal to 0, branch to returnOne
@@ -64,7 +64,7 @@ factorial:
   sw      $t0, 0($sp)       # store current working number into the top of the stack segment
   sw      $ra, 8($sp)       # store counter at bottom of stack segment
  
-  jal     factorial         # recursive call
+  jal     fact         # recursive call
   lw      $ra, 8($sp)       # load this call's $ra again(we just got back from a jump)
   lw      $t1, 4($sp)       # load child's return value into $t1
  

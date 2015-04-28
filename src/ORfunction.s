@@ -1,10 +1,10 @@
 .data
 Prompt: .asciiz "Type the first number (A) for first binary, press ENTER. Type the second number (B) for second binary \n"
 Result: .asciiz "\nThe result is: "
-.globl main
+.globl orfunc
 .text
 
-main:
+orfunc:
 
   li $v0,4        # syscall to print String
     la $a0,Prompt   # load address of Prompt
@@ -18,7 +18,6 @@ main:
     syscall         # read second integer
     move $a1,$v0    # move integer in $v0 to $a1
     
-orfunc:
 	or $a2, $a0, $a1
 
 	li $v0, 4       # syscall to print result message
