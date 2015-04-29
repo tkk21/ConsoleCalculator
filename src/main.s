@@ -194,8 +194,9 @@ call_median:
 	la $a0, result_string
 	syscall
 	
-	li $v0, 1
-	add $a0, $t0, $zero
+	li $v0, 3
+	add.d $f12, $f0, $f0
+	sub.d $f12, $f12, $f0
 	syscall
 	
 	j end
