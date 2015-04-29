@@ -13,5 +13,7 @@ mean:
 	
 	div.d $f0, $f0, $f2 # sum/size
 	
+	
+	
 	addu	$ra, $0, $s5	#restore the return address
 	jr $ra

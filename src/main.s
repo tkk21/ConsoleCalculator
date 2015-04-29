@@ -128,21 +128,49 @@ call_div:
 
 call_gcd:
 	jal gcd
+	j end
 call_fact:
 	jal factorial
+	j end
 call_mod:
 	jal modulus
+	j end
 call_exp:
 	jal exponent
+	j end
 call_and:
 	jal andfunc
+	j end
 call_or:
 	jal orfunc
+	j end
 call_lcm:
 	jal lcm
+	j end
 call_var:
+	jal prompt_array
+		
+	add $a0, $zero, $v0
+	add $a1, $zero, $v1
+
+	jal variance
+	add.d $f12, $f0, $f0
+	sub.d $f12, $f12, $f0
 	
+	li $v0, 4
+	la $a0, result_string
+	syscall
+	#print result double
+	li $v0, 3
+	syscall
+	
+	j end
 call_mean:
+	jal prompt_array
+	
+	add $a0, $zero, $v0
+	add $a1, $zero, $v1
+
 	jal mean
 	add.d $f12, $f0, $f0
 	sub.d $f12, $f12, $f0
@@ -156,7 +184,22 @@ call_mean:
 	
 	j end
 call_median:
-
+	jal prompt_array
+	add $a0, $zero, $v0
+	add $a1, $zero, $v1
+	jal median
+	add $t0, $v0, $zero
+	
+	li $v0, 4
+	la $a0, result_string
+	syscall
+	
+	li $v0, 1
+	add $a0, $t0, $zero
+	syscall
+	
+	j end
+	
 call_mode:
 
 prompt_array:
