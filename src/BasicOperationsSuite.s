@@ -3,6 +3,7 @@
 	.globl subtraction
 	.globl multiplication
 	.globl division
+	.globl reset_arr
 #a0 = pointer to array
 #a1 = size of array
 
@@ -16,7 +17,7 @@ add_loop:
 	addi $t1, $t1, 1 #increment iteration by 1
 	blt $t1, $a1, add_loop #while iteration < size of arr
 	add $v0, $zero, $t0 #add accumulator to the return
-	jr $ra #return
+	j reset_arr
 
 subtraction:
 	lw $t2, ($a0) # $t1 contains arr[i]
@@ -32,7 +33,7 @@ sub_loop:
 	addi $t1, $t1, 1 #increment iteration by 1
 	blt $t1, $a1, sub_loop #while iteration < size of arr
 	add $v0, $zero, $t0 #add accumulator to the return
-	jr $ra #return
+	j reset_arr
 	
 multiplication:
 	lw $t2, ($a0) # $t1 contains arr[i]
@@ -50,7 +51,7 @@ mult_loop:
 	addi $t1, $t1, 1 #increment iteration by 1
 	blt $t1, $a1, mult_loop #while iteration < size of arr
 	add $v0, $zero, $t0 #add accumulator to the return
-	jr $ra #return
+	j reset_arr
 	
 division:
 	lw $t2, ($a0) # $t1 contains arr[i]
@@ -75,4 +76,16 @@ div_loop:
 	blt $t1, $a1, div_loop #while iteration < size of arr
 	
 	
-	jr $ra #return
+	j reset_arr
+	
+reset_arr:
+	#reset array ptr
+	add $t0, $a1, $zero #get size of arr
+	sll $t0, $t0, 2 #turn into word length
+	sub $a0, $a0, $t0 #restore arr ptr to normal
+	
+	#lw $t0, ($a0)
+	#li $v0, 1
+	#add $a0, $zero, $t0
+	#syscall
+	jr $ra 
