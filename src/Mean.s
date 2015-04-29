@@ -1,63 +1,17 @@
-.data
-	array: .space 808
-	promptA: .asciiz "Enter up to 100 numbers to average. '0' will end inputs."
-	promptB: .asciiz "Enter a number: "
-	answer: .asciiz "The average is: "
-	slash: .asciiz "/"
-	newline: .asciiz "\n"
-	space: .asciiz " "
-.globl mean
 .text
-
+.globl mean
 mean:
-	addu	$s6, $0, $ra
-	la $t0, array   #initializes some variables
-	li $v0,4        # syscall to print String
-    la $a0,promptA  # load address of Prompt
-    syscall         # print Prompt String
-
-	la $a0, newline #prints a newline
-	li $v0, 4
-	syscall
-
-input:
-	li $v0,4        	# syscall to print String
-    la $a0,promptB  	# load address of Prompt
-    syscall         	# print Prompt String
-
-	li $v0, 7 			#gets user input
-	syscall
-
-	s.d $f0, 0($t0) 	#puts integer into array
-	addi $t0, $t0, 8 	#moves to next array index
-
-	c.eq.d $f0, $f2 	#continues asking for input if last input was not 0
-	bc1t resetIndex
-	jal input
-	jr $ra				#returns to main
-
-resetIndex:
-	la $t0, array 		#resets array index
-
-summation:
-	l.d $f0, 0($t0)     #load the index's value and move to the next index
-	addi $t0, $t0, 8
-	add.d $f2, $f2, $f0	#calculating total of all values
-
-	c.eq.d $f0, $f4 	#continues loop through array if 0 was not the input
-	bc1t findingMean
-	jal summation
-	jr $ra				#returns to main
-
-findingMean:
-	la $t3, array			#gets the total number of entries
-	sub $t0, $t0, $t3
-	div $t0, $t0, 8
-	addi $t0, $t0, -1
-
-	mtc1 $t0, $f6			#calculates the average
-	cvt.d.w $f6, $f6
-	div.d $f0, $f2, $f6
-
-	addu	$ra, $0, $s6	#restore the return address
+	addu	$s5, $0, $ra	#save the return address in a global register
+	
+	jal addition
+	
+	mtc1 $v0, $f0 #convert sum of arr into double
+	cvt.d.w $f0, $f0
+	
+	mtc1 $a1, $f2 #convert size of arr into double
+	cvt.d.w $f2, $f2
+	
+	div.d $f0, $f0, $f2 # sum/size
+	
+	addu	$ra, $0, $s5	#restore the return address
 	jr $ra
