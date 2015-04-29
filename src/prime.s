@@ -2,10 +2,10 @@
 Prompt: .asciiz "Enter a positive number to check if prime press ENTER.) \n"
 Prime: .asciiz "\nThe number is Prime"
 notPrime: .asciiz "\nThe number is not prime. It is divisible by "
-.globl main
+.globl find_prime
 .text
 
-main:
+find_prime:
     li $v0,4        # syscall to print String
     la $a0,Prompt   # load address of Prompt
     syscall         # print Prompt String  

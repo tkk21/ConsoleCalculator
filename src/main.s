@@ -2,13 +2,7 @@
 main:				#main has to be a global label
 	addu	$s7, $0, $ra	#save the return address in a global register
 
-
 #actual start of the main program
-
-
-
-
-
 	.text
 take_argument:
 	li	$v0, 4		#print_str (system call 4)
@@ -52,7 +46,7 @@ take_argument:
 	addi $t0, $t0, 1
 	beq $v0, $t0, call_median
 	addi $t0, $t0, 1
-	beq $v0, $t0, call_mode
+	beq $v0, $t0, call_prime
 	addi $t0, $t0, 1
 	
 	
@@ -201,8 +195,9 @@ call_median:
 	
 	j end
 	
-call_mode:
-
+call_prime:
+	jal find_prime
+	j end
 prompt_array:
 	li	$v0, 4		#print_str (system call 4)
 	la	$a0, prompt_array_string	# takes the address of the string prompt as an argument 
@@ -234,11 +229,11 @@ array_populate:
 end: 
                        #Usual stuff at the end of the main
 	addu	$ra, $0, $s7	#restore the return address
-	jr	$ra		#return to the main program
-	add	$0, $0, $0	#nop
+	li $v0, 10 		# system call to end program
+	syscall
 
 	.data
 intro: .asciiz "\n Welcome to Console Calculator \n Please enter the proper argument to use the following functions \n"  
-argument_inst: .asciiz "\n 1: addition \n 2: subtraction \n 3: multiplication \n 4: division \n 5: Greatest Common Divisor \n 6: factorial \n 7: modulus \n 8: integer exponent \n 9: logical and \n 10: logical or \n 11: Least Common Multiple \n 12: variance \n 13: mean \n 14: median \n 15: mode \n"
+argument_inst: .asciiz "\n 1: addition \n 2: subtraction \n 3: multiplication \n 4: division \n 5: Greatest Common Divisor \n 6: factorial \n 7: modulus \n 8: integer exponent \n 9: logical and \n 10: logical or \n 11: Least Common Multiple \n 12: variance \n 13: mean \n 14: median \n 15: prime \n"
 prompt_array_string: .asciiz "\n Please Enter the number of arguments you want to enter \n"
 result_string: .asciiz "\n The result is: "
